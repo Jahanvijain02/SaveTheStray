@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en" id="app-root">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SaveTheStray — Emergency Animal Rescue</title>
+  <meta name="description" content="SaveTheStray is a mobile-first emergency animal rescue system. Report stray animals in distress, access safety guides, and track rescue operations in real-time.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/logo.png" type="image/png">
+</head>
+<body>
+
+  <!-- ======================== -->
+  <!-- PHONE FRAME              -->
+  <!-- ======================== -->
+  <div class="phone-frame">
+    <div class="screen-container">
+
+      <!-- ======================== -->
+      <!-- 1. SPLASH SCREEN         -->
+      <!-- ======================== -->
+      <div id="splash" class="screen splash-screen active">
+        <img src="assets/logo.png" alt="SaveTheStray logo" class="splash-logo">
+        <h1 class="splash-title">
+          Save<span class="highlight">The</span>Stray
+        </h1>
+        <p class="splash-tagline" data-i18n="tagline">Every life deserves a chance</p>
+        <img src="assets/hero.png" alt="Person rescuing a dog" class="splash-hero">
+        <button id="btn-get-started" class="btn-get-started" aria-label="Get Started" data-i18n="get_started">
+          Get Started →
+        </button>
+        <div class="splash-dots">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <!-- ======================== -->
+      <!-- 2. HOME SCREEN           -->
+      <!-- ======================== -->
+      <div id="home" class="screen home-screen">
+        <div class="home-topbar">
+          <div class="topbar-greeting">
+            <h2 data-i18n="greeting">Hello, Rescuer! 👋</h2>
+            <p data-i18n="greeting_sub">What would you like to do today?</p>
+          </div>
+          <div class="topbar-right">
+            <div class="lang-switcher" id="lang-switcher">
+              <button class="lang-btn" id="lang-btn" aria-label="Change language">
+                <span class="lang-flag" id="lang-flag">🇬🇧</span>
+                <span class="lang-code" id="lang-code">EN</span>
+                <span class="lang-chevron">▾</span>
+              </button>
+              <div class="lang-dropdown" id="lang-dropdown">
+                <div class="lang-option active" data-lang="en"><span>🇬🇧</span> English</div>
+                <div class="lang-option" data-lang="hi"><span>🇮🇳</span> हिन्दी</div>
+                <div class="lang-option" data-lang="bn"><span>🇮🇳</span> বাংলা</div>
+                <div class="lang-option" data-lang="ta"><span>🇮🇳</span> தமிழ்</div>
+                <div class="lang-option" data-lang="te"><span>🇮🇳</span> తెలుగు</div>
+                <div class="lang-option" data-lang="mr"><span>🇮🇳</span> मराठी</div>
+                <div class="lang-option" data-lang="kn"><span>🇮🇳</span> ಕನ್ನಡ</div>
+              </div>
+            </div>
+            <div class="topbar-avatar" aria-label="Profile">🦊</div>
+          </div>
+        </div>
+
+        <!-- 🎉 Success Stories — Hero Carousel (visible on open) -->
+        <div class="success-stories-section">
+          <div class="success-stories-header">
+            <h3 data-i18n="success_stories">🎉 Success Stories</h3>
+            <span class="stories-count">3 stories</span>
+          </div>
+          <div class="success-carousel" id="success-carousel">
+            <div class="success-carousel-track" id="success-carousel-track">
+              <!-- Story 1 -->
+              <div class="story-slide" id="story-slide-1">
+                <div class="story-slide-img-wrap">
+                  <img src="assets/rescued-dog.png" alt="Max — rescued dog" class="story-slide-img">
+                  <span class="story-slide-badge">🏠 Rescued & Adopted</span>
+                </div>
+                <div class="story-slide-body">
+                  <h4>Max's Journey Home</h4>
+                  <p>Found injured on NH-44 with a broken leg. After 3 weeks of care, Max found a loving forever home! 🐾</p>
+                  <button class="story-read-more" data-story="1">Read Full Story →</button>
+                </div>
+              </div>
+              <!-- Story 2 -->
+              <div class="story-slide" id="story-slide-2">
+                <div class="story-slide-img-wrap">
+                  <img src="assets/stray-cat.png" alt="Luna — rescued kitten" class="story-slide-img">
+                  <span class="story-slide-badge">💙 Rehabilitated</span>
+                </div>
+                <div class="story-slide-body">
+                  <h4>Luna's Second Chance</h4>
+                  <p>Tiny kitten found trapped in a drain during monsoon. Now she's healthy and adopted by a loving family! 🐱</p>
+                  <button class="story-read-more" data-story="2">Read Full Story →</button>
+                </div>
+              </div>
+              <!-- Story 3 -->
+              <div class="story-slide" id="story-slide-3">
+                <div class="story-slide-img-wrap">
+                  <img src="assets/injured-bird.png" alt="Coco — rescued pigeon" class="story-slide-img">
+                  <span class="story-slide-badge">🕊️ Released to Wild</span>
+                </div>
+                <div class="story-slide-body">
+                  <h4>Coco Flies Again</h4>
+                  <p>Pigeon with a broken wing nursed back to health by our volunteers. Released back into the sky! 🕊️</p>
+                  <button class="story-read-more" data-story="3">Read Full Story →</button>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-dots" id="carousel-dots">
+              <span class="carousel-dot active" data-index="0"></span>
+              <span class="carousel-dot" data-index="1"></span>
+              <span class="carousel-dot" data-index="2"></span>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- Emotional Animal Banner -->
+        <div class="emotional-banner">
+          <img src="assets/animals-banner.png" alt="Stray animals need your help" class="emotional-banner-img">
+          <div class="emotional-banner-overlay">
+            <p data-i18n="emotional_banner">They can't ask for help. But you can.</p>
+          </div>
+        </div>
+
+        <!-- Emergency banner -->
+        <div id="emergency-banner" class="emergency-banner" role="button" aria-label="Report emergency">
+          <div class="emergency-icon">🚨</div>
+          <div class="emergency-text">
+            <h3 data-i18n="report_emergency">Report Emergency</h3>
+            <p data-i18n="report_emergency_sub">Tap here to report an animal in danger</p>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <h3 class="section-label" data-i18n="quick_actions">Quick Actions</h3>
+        <div class="quick-actions">
+          <div class="action-card" id="action-shelters">
+            <div class="action-icon shelters">🏥</div>
+            <h4 data-i18n="nearby_shelters">Nearby Shelters</h4>
+            <p data-i18n="nearby_shelters_sub">Find NGOs & shelters near you</p>
+          </div>
+          <div class="action-card" data-screen="safety" id="action-safety">
+            <div class="action-icon safety">🛡️</div>
+            <h4 data-i18n="safety_guide">Safety Guide</h4>
+            <p data-i18n="safety_guide_sub">Learn safe rescue methods</p>
+          </div>
+          <div class="action-card" data-screen="tracking" id="action-track">
+            <div class="action-icon track">📡</div>
+            <h4 data-i18n="track_rescue">Track Rescue</h4>
+            <p data-i18n="track_rescue_sub">Follow ongoing rescues</p>
+          </div>
+          <div class="action-card" id="action-sos">
+            <div class="action-icon sos">🆘</div>
+            <h4 data-i18n="sos_alert">SOS Alert</h4>
+            <p data-i18n="sos_alert_sub">Immediate help needed</p>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-bar">
+          <div class="stat-chip"><span class="dot active"></span> 12 Active</div>
+          <div class="stat-chip"><span class="dot pending"></span> 5 Pending</div>
+          <div class="stat-chip"><span class="dot rescued"></span> 238 Rescued</div>
+        </div>
+
+        <!-- Recent Reports -->
+        <h3 class="section-label" data-i18n="recent_reports">Recent Reports</h3>
+        <div class="recent-reports">
+          <div class="report-card">
+            <div class="report-thumb dog">
+              <img src="assets/stray-puppy.png" alt="Injured dog" class="report-thumb-img">
+            </div>
+            <div class="report-info">
+              <h4 data-i18n="report_1_title">Injured Dog — MG Road</h4>
+              <p data-i18n="report_1_time">Reported 15 min ago</p>
+            </div>
+            <span class="report-status active" data-i18n="status_active">Active</span>
+          </div>
+          <div class="report-card">
+            <div class="report-thumb cat">
+              <img src="assets/stray-cat.png" alt="Stranded kitten" class="report-thumb-img">
+            </div>
+            <div class="report-info">
+              <h4 data-i18n="report_2_title">Stranded Kitten — HSR Layout</h4>
+              <p data-i18n="report_2_time">Reported 2 hours ago</p>
+            </div>
+            <span class="report-status pending" data-i18n="status_pending">Pending</span>
+          </div>
+          <div class="report-card">
+            <div class="report-thumb dog">
+              <img src="assets/stray-puppy.png" alt="Emaciated puppy" class="report-thumb-img">
+            </div>
+            <div class="report-info">
+              <h4 data-i18n="report_3_title">Emaciated Puppy — Koramangala</h4>
+              <p data-i18n="report_3_time">Reported 5 hours ago</p>
+            </div>
+            <span class="report-status active" data-i18n="status_active">Active</span>
+          </div>
+        </div>
+
+        <!-- (Success Stories moved to top of home screen) -->
+      </div>
+
+      <!-- ======================== -->
+      <!-- 3. REPORT ANIMAL SCREEN  -->
+      <!-- ======================== -->
+      <div id="report" class="screen report-screen">
+        <!-- Scrollable content area -->
+        <div class="report-scroll-area">
+          <div class="screen-header">
+            <button class="btn-back" aria-label="Go back">←</button>
+            <h2 data-i18n="report_animal" id="report-screen-title">Report Animal</h2>
+          </div>
+
+          <!-- Emergency Mode Banner (hidden by default) -->
+          <div class="emergency-mode-banner" id="emergency-mode-banner" style="display: none;">
+            <div class="emergency-mode-pulse"></div>
+            <div class="emergency-mode-text">
+              <span class="emergency-mode-icon">🚨</span>
+              <div>
+                <h4 data-i18n="emergency_mode">Emergency Mode</h4>
+                <p data-i18n="emergency_mode_sub">High urgency · Auto-locating · Fast track</p>
+              </div>
+            </div>
+          </div>
+
+          <form id="report-form" class="report-form" onsubmit="return false;">
+            <!-- Photo upload -->
+            <input type="file" id="photo-file-input" accept="image/*" capture="environment" style="display:none;">
+            <div id="photo-upload" class="photo-upload" role="button" aria-label="Upload photo">
+              <span class="upload-icon">📸</span>
+              <p class="upload-label" data-i18n="take_photo">Take a Photo</p>
+              <span class="upload-hint" data-i18n="upload_gallery">or upload from gallery</span>
+              <!-- Uploaded state (hidden by default) -->
+              <div class="upload-success" style="display:none;">
+                <span class="upload-success-icon">✅</span>
+                <p class="upload-success-text">Photo added</p>
+              </div>
+            </div>
+
+            <!-- Description (below photo) -->
+            <div class="form-group">
+              <label data-i18n="description">Description</label>
+              <textarea id="description-input" placeholder="Describe the animal's condition, location, type of animal, any injuries..."></textarea>
+            </div>
+          </form>
+        </div>
+
+        <!-- Success Overlay -->
+        <div id="success-overlay" class="success-overlay">
+          <div class="success-check">✓</div>
+          <h3 data-i18n="success_title">Report Submitted Successfully</h3>
+          <p data-i18n="success_msg">Your report has been sent to nearby rescue teams. You will receive updates on the rescue progress.</p>
+          <button id="btn-done" class="btn-done" aria-label="Done">
+            Track Rescue →
+          </button>
+        </div>
+      </div>
+
+      <!-- ======================== -->
+      <!-- 4. SAFETY GUIDE SCREEN   -->
+      <!-- ======================== -->
+      <div id="safety" class="screen safety-screen">
+        <div class="screen-header">
+          <button class="btn-back" aria-label="Go back">←</button>
+          <h2 data-i18n="safety_guide">Safety Guide</h2>
+        </div>
+
+        <div class="guide-hero">
+          <div class="icon">🛡️</div>
+          <h3 data-i18n="stay_safe">Stay Safe While Rescuing</h3>
+          <p data-i18n="stay_safe_sub">Essential tips for safe animal rescue</p>
+        </div>
+
+        <div class="guide-list">
+          <!-- Guide 1 -->
+          <div class="guide-card" id="guide-1">
+            <div class="guide-card-header">
+              <div class="guide-number n1">01</div>
+              <h4>Approach with Caution</h4>
+              <span class="guide-chevron">▼</span>
+            </div>
+            <div class="guide-card-body">
+              <div class="guide-card-body-inner">
+                <p>Always approach a stray animal slowly and calmly. Avoid sudden movements or loud noises. Let the animal see and smell you before attempting to touch it.</p>
+                <div class="guide-tip">
+                  <span class="tip-icon">💡</span>
+                  <span>Crouch down to appear less threatening. Extend your hand slowly for the animal to sniff.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Guide 2 -->
+          <div class="guide-card" id="guide-2">
+            <div class="guide-card-header">
+              <div class="guide-number n2">02</div>
+              <h4>Assess the Situation</h4>
+              <span class="guide-chevron">▼</span>
+            </div>
+            <div class="guide-card-body">
+              <div class="guide-card-body-inner">
+                <p>Check the animal's behavior for signs of injury, illness, or aggression. A wagging tail doesn't always mean friendliness — observe body language carefully.</p>
+                <div class="guide-tip">
+                  <span class="tip-icon">💡</span>
+                  <span>Look for limping, bleeding, difficulty breathing, or discharge from eyes and nose.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Guide 3 -->
+          <div class="guide-card" id="guide-3">
+            <div class="guide-card-header">
+              <div class="guide-number n3">03</div>
+              <h4>Use Protection</h4>
+              <span class="guide-chevron">▼</span>
+            </div>
+            <div class="guide-card-body">
+              <div class="guide-card-body-inner">
+                <p>Wear gloves or use a cloth when handling injured animals. This protects both you and the animal. If the animal is aggressive, do not attempt to handle it alone.</p>
+                <div class="guide-tip">
+                  <span class="tip-icon">💡</span>
+                  <span>Keep a basic rescue kit in your car: gloves, towel, cardboard box, and water.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Guide 4 -->
+          <div class="guide-card" id="guide-4">
+            <div class="guide-card-header">
+              <div class="guide-number n4">04</div>
+              <h4>Provide First Aid</h4>
+              <span class="guide-chevron">▼</span>
+            </div>
+            <div class="guide-card-body">
+              <div class="guide-card-body-inner">
+                <p>For minor wounds, clean gently with water. For serious injuries, keep the animal warm and still. Do not give human medication to animals.</p>
+                <div class="guide-tip">
+                  <span class="tip-icon">💡</span>
+                  <span>A calm, confined space (like a box with a towel) helps reduce shock and stress.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Guide 5 -->
+          <div class="guide-card" id="guide-5">
+            <div class="guide-card-header">
+              <div class="guide-number n5">05</div>
+              <h4>Contact Help</h4>
+              <span class="guide-chevron">▼</span>
+            </div>
+            <div class="guide-card-body">
+              <div class="guide-card-body-inner">
+                <p>Call a local animal rescue organization or veterinarian immediately. Document the location and condition using this app to speed up the rescue process.</p>
+                <div class="guide-tip">
+                  <span class="tip-icon">💡</span>
+                  <span>Take clear photos and note landmarks near the animal's location.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Emergency Contacts -->
+        <div class="emergency-contacts">
+          <h4>📞 Emergency Contacts</h4>
+          <div class="contact-item">
+            <div class="contact-info">
+              <h5>Animal Helpline</h5>
+              <p>1962 (Nationwide)</p>
+            </div>
+            <button class="btn-call" aria-label="Call Animal Helpline">📞</button>
+          </div>
+          <div class="contact-item">
+            <div class="contact-info">
+              <h5>SPCA India</h5>
+              <p>+91-11-2379 1850</p>
+            </div>
+            <button class="btn-call" aria-label="Call SPCA">📞</button>
+          </div>
+          <div class="contact-item">
+            <div class="contact-info">
+              <h5>Blue Cross India</h5>
+              <p>+91-44-2230 0066</p>
+            </div>
+            <button class="btn-call" aria-label="Call Blue Cross">📞</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================== -->
+      <!-- 5. TRACKING SCREEN       -->
+      <!-- ======================== -->
+      <div id="tracking" class="screen tracking-screen">
+        <div class="screen-header">
+          <button class="btn-back" aria-label="Go back">←</button>
+          <h2 data-i18n="track_rescues">Track Rescues</h2>
+        </div>
+
+        <!-- Map -->
+        <div class="map-container">
+          <span class="map-pin pin-1">📍</span>
+          <span class="map-pin pin-2">📍</span>
+          <span class="map-pin pin-3">📍</span>
+          <div class="map-label">🗺️ 3 active rescues nearby</div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filter-chips">
+          <button class="chip active" id="chip-all">All</button>
+          <button class="chip" id="chip-active" title="Team has been assigned and is responding to the report">Responding</button>
+          <button class="chip" id="chip-transit" title="Rescue team is on the way to the animal's location">On the Way</button>
+          <button class="chip" id="chip-rescued">Rescued</button>
+        </div>
+
+        <h3 class="section-label" id="tracking-section-label"></h3>
+
+        <div class="tracking-list">
+          <!-- Track Card 1 -->
+          <div class="track-card" id="track-1" data-status="active">
+            <div class="track-top">
+              <div class="track-animal-icon dog">🐕</div>
+              <div class="track-details">
+                <h4>Injured Dog — MG Road</h4>
+                <p>Rescue team en route</p>
+              </div>
+              <span class="track-id">#R-2847</span>
+            </div>
+            <div class="track-progress">
+              <div class="progress-step done"></div>
+              <div class="progress-step done"></div>
+              <div class="progress-step current"></div>
+              <div class="progress-step"></div>
+            </div>
+            <div class="track-status-row">
+              <span class="track-status-text rescue">🚑 Responding — Team assigned</span>
+              <span class="track-time">ETA 8 min</span>
+            </div>
+          </div>
+
+          <!-- Track Card 2 -->
+          <div class="track-card" id="track-2" data-status="transit">
+            <div class="track-top">
+              <div class="track-animal-icon cat">🐈</div>
+              <div class="track-details">
+                <h4>Stranded Kitten — HSR</h4>
+                <p>Volunteer approaching</p>
+              </div>
+              <span class="track-id">#R-2843</span>
+            </div>
+            <div class="track-progress">
+              <div class="progress-step done"></div>
+              <div class="progress-step current"></div>
+              <div class="progress-step"></div>
+              <div class="progress-step"></div>
+            </div>
+            <div class="track-status-row">
+              <span class="track-status-text transit">🚗 On the Way — Heading to location</span>
+              <span class="track-time">ETA 15 min</span>
+            </div>
+          </div>
+
+          <!-- Track Card 3 -->
+          <div class="track-card" id="track-3" data-status="active">
+            <div class="track-top">
+              <div class="track-animal-icon bird">🐦</div>
+              <div class="track-details">
+                <h4>Injured Pigeon — Indiranagar</h4>
+                <p>Report received</p>
+              </div>
+              <span class="track-id">#R-2840</span>
+            </div>
+            <div class="track-progress">
+              <div class="progress-step done"></div>
+              <div class="progress-step"></div>
+              <div class="progress-step"></div>
+              <div class="progress-step"></div>
+            </div>
+            <div class="track-status-row">
+              <span class="track-status-text reported">📋 Reported</span>
+              <span class="track-time">20 min ago</span>
+            </div>
+          </div>
+
+          <!-- Track Card 4 - Rescued -->
+          <div class="track-card" id="track-4" data-status="rescued">
+            <div class="track-top">
+              <div class="track-animal-icon dog">🐕</div>
+              <div class="track-details">
+                <h4>Stray Pup — Koramangala</h4>
+                <p>Safely rescued & sheltered</p>
+              </div>
+              <span class="track-id">#R-2835</span>
+            </div>
+            <div class="track-progress">
+              <div class="progress-step done"></div>
+              <div class="progress-step done"></div>
+              <div class="progress-step done"></div>
+              <div class="progress-step done"></div>
+            </div>
+            <div class="track-status-row">
+              <span class="track-status-text rescued-status">✅ Rescued</span>
+              <span class="track-time">2 hours ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================== -->
+      <!-- 5b. SHELTERS SCREEN      -->
+      <!-- ======================== -->
+      <div id="shelters" class="screen shelters-screen">
+        <div class="screen-header">
+          <button class="btn-back" aria-label="Go back">←</button>
+          <h2 data-i18n="nearby_shelters">Nearby Shelters</h2>
+        </div>
+
+        <div class="shelters-search">
+          <input type="text" id="shelter-search" placeholder="Search by name or area..." />
+          <span class="shelters-search-icon">🔍</span>
+        </div>
+
+        <div class="shelters-list" id="shelters-list">
+          <div class="shelter-card" data-name="cupa" data-area="hsr">
+            <div class="shelter-card-header">
+              <div class="shelter-icon">🏥</div>
+              <div class="shelter-info">
+                <h4>CUPA Animal Shelter</h4>
+                <p>HSR Layout, Bangalore</p>
+              </div>
+              <span class="shelter-dist">1.2 km</span>
+            </div>
+            <div class="shelter-tags">
+              <span class="shelter-tag">Dogs</span>
+              <span class="shelter-tag">Cats</span>
+              <span class="shelter-tag">24/7</span>
+            </div>
+            <div class="shelter-actions">
+              <a href="tel:+918026680789" class="shelter-call-btn">📞 Call</a>
+              <button class="shelter-dir-btn">📍 Directions</button>
+            </div>
+          </div>
+
+          <div class="shelter-card" data-name="charlie" data-area="indiranagar">
+            <div class="shelter-card-header">
+              <div class="shelter-icon">🐾</div>
+              <div class="shelter-info">
+                <h4>Charlie's Animal Rescue</h4>
+                <p>Indiranagar, Bangalore</p>
+              </div>
+              <span class="shelter-dist">2.8 km</span>
+            </div>
+            <div class="shelter-tags">
+              <span class="shelter-tag">Dogs</span>
+              <span class="shelter-tag">Birds</span>
+              <span class="shelter-tag">Rehab</span>
+            </div>
+            <div class="shelter-actions">
+              <a href="tel:+919845012345" class="shelter-call-btn">📞 Call</a>
+              <button class="shelter-dir-btn">📍 Directions</button>
+            </div>
+          </div>
+
+          <div class="shelter-card" data-name="karuna" data-area="koramangala">
+            <div class="shelter-card-header">
+              <div class="shelter-icon">💙</div>
+              <div class="shelter-info">
+                <h4>Karuna Animal Welfare</h4>
+                <p>Koramangala, Bangalore</p>
+              </div>
+              <span class="shelter-dist">3.5 km</span>
+            </div>
+            <div class="shelter-tags">
+              <span class="shelter-tag">All Animals</span>
+              <span class="shelter-tag">Adoption</span>
+            </div>
+            <div class="shelter-actions">
+              <a href="tel:+919900123456" class="shelter-call-btn">📞 Call</a>
+              <button class="shelter-dir-btn">📍 Directions</button>
+            </div>
+          </div>
+
+          <div class="shelter-card" data-name="pfa" data-area="jp-nagar">
+            <div class="shelter-card-header">
+              <div class="shelter-icon">🛡️</div>
+              <div class="shelter-info">
+                <h4>People For Animals</h4>
+                <p>JP Nagar, Bangalore</p>
+              </div>
+              <span class="shelter-dist">5.1 km</span>
+            </div>
+            <div class="shelter-tags">
+              <span class="shelter-tag">Emergency</span>
+              <span class="shelter-tag">Surgery</span>
+              <span class="shelter-tag">24/7</span>
+            </div>
+            <div class="shelter-actions">
+              <a href="tel:+918041234567" class="shelter-call-btn">📞 Call</a>
+              <button class="shelter-dir-btn">📍 Directions</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================== -->
+      <!-- 6. PROFILE SCREEN        -->
+      <!-- ======================== -->
+      <div id="profile" class="screen profile-screen">
+        <div class="screen-header">
+          <button class="btn-back" aria-label="Go back">←</button>
+          <h2>My Profile</h2>
+        </div>
+
+        <!-- Profile hero -->
+        <div class="profile-hero">
+          <div class="profile-avatar-lg">
+            <span>🦊</span>
+          </div>
+          <h3 class="profile-name" id="profile-display-name">Jahanvi</h3>
+          <p class="profile-role">Animal Rescuer · Since 2024</p>
+          <button class="profile-edit-btn" id="btn-edit-profile">✏️ Edit Profile</button>
+        </div>
+
+        <!-- Achievement Badge -->
+        <div class="profile-badge">
+          <span class="badge-icon">🏅</span>
+          <div class="badge-info">
+            <h4>Guardian Hero</h4>
+            <p>Rescued 8+ animals — keep going!</p>
+          </div>
+        </div>
+
+        <!-- Stats row -->
+        <div class="profile-stats">
+          <div class="profile-stat">
+            <span class="stat-value">12</span>
+            <span class="stat-label">Reports</span>
+          </div>
+          <div class="profile-stat-divider"></div>
+          <div class="profile-stat">
+            <span class="stat-value">8</span>
+            <span class="stat-label">Rescues</span>
+          </div>
+          <div class="profile-stat-divider"></div>
+          <div class="profile-stat">
+            <span class="stat-value">36</span>
+            <span class="stat-label">Hours</span>
+          </div>
+        </div>
+
+        <!-- Menu items -->
+        <div class="profile-menu">
+          <div class="profile-menu-item" id="menu-my-reports">
+            <div class="menu-icon" style="background: var(--coral-light);">📋</div>
+            <span class="menu-text">My Reports</span>
+            <span class="menu-chevron">›</span>
+          </div>
+          <div class="profile-menu-item" id="menu-saved-locations">
+            <div class="menu-icon" style="background: var(--teal-light);">📍</div>
+            <span class="menu-text">Saved Locations</span>
+            <span class="menu-chevron">›</span>
+          </div>
+          <div class="profile-menu-item" id="menu-notifications">
+            <div class="menu-icon" style="background: #E8DFFF;">🔔</div>
+            <span class="menu-text">Notifications</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-notif" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="profile-menu-item" id="menu-dark-mode">
+            <div class="menu-icon" style="background: var(--grey-100);">🌙</div>
+            <span class="menu-text">Dark Mode</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-dark">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="profile-menu-item" id="menu-help">
+            <div class="menu-icon" style="background: #FFE8CC;">❓</div>
+            <span class="menu-text">Help & Support</span>
+            <span class="menu-chevron">›</span>
+          </div>
+          <div class="profile-menu-item logout" id="menu-logout">
+            <div class="menu-icon" style="background: var(--coral-light);">🚪</div>
+            <span class="menu-text">Log Out</span>
+            <span class="menu-chevron">›</span>
+          </div>
+        </div>
+
+        <!-- Edit Profile Modal -->
+        <div class="edit-profile-modal" id="edit-profile-modal" style="display:none;">
+          <div class="edit-profile-content">
+            <h3>Edit Profile</h3>
+            <div class="edit-field">
+              <label>Name</label>
+              <input type="text" id="edit-name" value="Jahanvi" />
+            </div>
+            <div class="edit-field">
+              <label>Phone</label>
+              <input type="tel" id="edit-phone" value="+91 98765 43210" />
+            </div>
+            <div class="edit-field">
+              <label>City</label>
+              <input type="text" id="edit-city" value="Bangalore" />
+            </div>
+            <div class="edit-modal-actions">
+              <button class="edit-cancel" id="edit-cancel">Cancel</button>
+              <button class="edit-save" id="edit-save">Save</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- App version -->
+        <p class="profile-version">SaveTheStray v1.0.0</p>
+      </div>
+
+      <!-- ======================== -->
+      <!-- SOS OVERLAY              -->
+      <!-- ======================== -->
+      <div id="sos-overlay" class="sos-overlay">
+        <div class="sos-overlay-content">
+          <button class="sos-close" id="sos-close" aria-label="Close">✕</button>
+          <div class="sos-header">
+            <div class="sos-pulse-ring">
+              <span class="sos-icon">🆘</span>
+            </div>
+            <h3 data-i18n="sos_title">Emergency Helplines</h3>
+            <p data-i18n="sos_desc">Tap to call immediately</p>
+          </div>
+          <div class="sos-contacts">
+            <a href="tel:1962" class="sos-call-card">
+              <div class="sos-call-icon">📞</div>
+              <div class="sos-call-info">
+                <h4>Animal Helpline</h4>
+                <p>1962 (Nationwide)</p>
+              </div>
+              <div class="sos-call-btn" data-i18n="call_now">Call Now</div>
+            </a>
+            <a href="tel:+911123791850" class="sos-call-card">
+              <div class="sos-call-icon">🏥</div>
+              <div class="sos-call-info">
+                <h4>SPCA India</h4>
+                <p>+91-11-2379 1850</p>
+              </div>
+              <div class="sos-call-btn" data-i18n="call_now">Call Now</div>
+            </a>
+            <a href="tel:+914422300066" class="sos-call-card">
+              <div class="sos-call-icon">💙</div>
+              <div class="sos-call-info">
+                <h4>Blue Cross India</h4>
+                <p>+91-44-2230 0066</p>
+              </div>
+              <div class="sos-call-btn" data-i18n="call_now">Call Now</div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================== -->
+      <!-- TOAST                    -->
+      <!-- ======================== -->
+      <div id="toast" class="toast"></div>
+
+      <!-- ======================== -->
+      <!-- STORY DETAIL MODAL       -->
+      <!-- ======================== -->
+      <div class="story-detail-modal" id="story-detail-modal">
+        <div class="story-detail-content" id="story-detail-content">
+          <button class="story-detail-close" id="story-detail-close">✕</button>
+          <div class="story-detail-img-wrap" id="story-detail-img-wrap"></div>
+          <div class="story-detail-body" id="story-detail-body"></div>
+        </div>
+      </div>
+
+    </div><!-- /screen-container -->
+
+    <!-- ======================== -->
+    <!-- SUBMIT FOOTER (fixed)    -->
+    <!-- ======================== -->
+    <div id="submit-footer" class="submit-footer" style="display: none;">
+      <div class="submit-footer-inner">
+        <div id="submit-checklist" class="submit-checklist">
+          <span class="check-item" id="check-photo">📷 Add a Photo to submit</span>
+        </div>
+        <button type="button" id="btn-submit" class="btn-submit" disabled>
+          🚀 Submit Report
+        </button>
+      </div>
+    </div>
+
+    <!-- ======================== -->
+    <!-- BOTTOM NAV               -->
+    <!-- ======================== -->
+    <nav class="bottom-nav" style="display: none;" aria-label="Main navigation">
+      <button class="nav-item" data-screen="home" id="nav-home">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Home</span>
+      </button>
+      <button class="nav-item" data-screen="safety" id="nav-safety">
+        <span class="nav-icon">🛡️</span>
+        <span class="nav-label">Safety</span>
+      </button>
+      <button class="nav-item nav-fab" data-screen="report" id="nav-report">
+        <span class="nav-icon">＋</span>
+        <span class="nav-label">Report</span>
+      </button>
+      <button class="nav-item" data-screen="tracking" id="nav-tracking">
+        <span class="nav-icon">📡</span>
+        <span class="nav-label">Track</span>
+      </button>
+      <button class="nav-item" data-screen="profile" id="nav-profile">
+        <span class="nav-icon">👤</span>
+        <span class="nav-label">Profile</span>
+      </button>
+    </nav>
+
+  </div><!-- /phone-frame -->
+
+  <script src="app.js"></script>
+</body>
+</html>
