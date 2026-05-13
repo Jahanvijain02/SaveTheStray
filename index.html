@@ -64,61 +64,6 @@
           </div>
         </div>
 
-        <!-- 🎉 Success Stories — Hero Carousel (visible on open) -->
-        <div class="success-stories-section">
-          <div class="success-stories-header">
-            <h3 data-i18n="success_stories">🎉 Success Stories</h3>
-            <span class="stories-count">3 stories</span>
-          </div>
-          <div class="success-carousel" id="success-carousel">
-            <div class="success-carousel-track" id="success-carousel-track">
-              <!-- Story 1 -->
-              <div class="story-slide" id="story-slide-1">
-                <div class="story-slide-img-wrap">
-                  <img src="assets/rescued-dog.png" alt="Max — rescued dog" class="story-slide-img">
-                  <span class="story-slide-badge">🏠 Rescued & Adopted</span>
-                </div>
-                <div class="story-slide-body">
-                  <h4>Max's Journey Home</h4>
-                  <p>Found injured on NH-44 with a broken leg. After 3 weeks of care, Max found a loving forever home! 🐾</p>
-                  <button class="story-read-more" data-story="1">Read Full Story →</button>
-                </div>
-              </div>
-              <!-- Story 2 -->
-              <div class="story-slide" id="story-slide-2">
-                <div class="story-slide-img-wrap">
-                  <img src="assets/stray-cat.png" alt="Luna — rescued kitten" class="story-slide-img">
-                  <span class="story-slide-badge">💙 Rehabilitated</span>
-                </div>
-                <div class="story-slide-body">
-                  <h4>Luna's Second Chance</h4>
-                  <p>Tiny kitten found trapped in a drain during monsoon. Now she's healthy and adopted by a loving family! 🐱</p>
-                  <button class="story-read-more" data-story="2">Read Full Story →</button>
-                </div>
-              </div>
-              <!-- Story 3 -->
-              <div class="story-slide" id="story-slide-3">
-                <div class="story-slide-img-wrap">
-                  <img src="assets/injured-bird.png" alt="Coco — rescued pigeon" class="story-slide-img">
-                  <span class="story-slide-badge">🕊️ Released to Wild</span>
-                </div>
-                <div class="story-slide-body">
-                  <h4>Coco Flies Again</h4>
-                  <p>Pigeon with a broken wing nursed back to health by our volunteers. Released back into the sky! 🕊️</p>
-                  <button class="story-read-more" data-story="3">Read Full Story →</button>
-                </div>
-              </div>
-            </div>
-            <div class="carousel-dots" id="carousel-dots">
-              <span class="carousel-dot active" data-index="0"></span>
-              <span class="carousel-dot" data-index="1"></span>
-              <span class="carousel-dot" data-index="2"></span>
-            </div>
-          </div>
-        </div>
-
-
-
         <!-- Emotional Animal Banner -->
         <div class="emotional-banner">
           <img src="assets/animals-banner.png" alt="Stray animals need your help" class="emotional-banner-img">
@@ -203,7 +148,15 @@
           </div>
         </div>
 
-        <!-- (Success Stories moved to top of home screen) -->
+        <!-- Success Stories -->
+        <h3 class="section-label" data-i18n="success_stories">🎉 Success Stories</h3>
+        <div class="success-story-card">
+          <img src="assets/rescued-dog.png" alt="Rescued dog with volunteer" class="story-img">
+          <div class="story-overlay">
+            <span class="story-badge" data-i18n="rescued_badge">🏠 Rescued & Adopted</span>
+            <p data-i18n="story_text">Max was found injured on NH-44. Today he has a loving home!</p>
+          </div>
+        </div>
       </div>
 
       <!-- ======================== -->
@@ -243,10 +196,85 @@
               </div>
             </div>
 
-            <!-- Description (below photo) -->
+            <!-- Animal Type -->
+            <div class="form-group">
+              <label data-i18n="animal_type">Animal Type</label>
+              <div class="type-picker">
+                <div class="type-option" data-type="dog" id="type-dog">
+                  <span class="emoji">🐕</span>
+                  <span>Dog</span>
+                </div>
+                <div class="type-option" data-type="cat" id="type-cat">
+                  <span class="emoji">🐈</span>
+                  <span>Cat</span>
+                </div>
+                <div class="type-option" data-type="bird" id="type-bird">
+                  <span class="emoji">🐦</span>
+                  <span>Bird</span>
+                </div>
+                <div class="type-option" data-type="other" id="type-other">
+                  <span class="emoji">🐾</span>
+                  <span>Other</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Urgency -->
+            <div class="form-group">
+              <label data-i18n="urgency_level">Urgency Level</label>
+              <div class="urgency-picker">
+                <div class="urgency-option low" data-level="low" id="urgency-low">Low</div>
+                <div class="urgency-option medium" data-level="medium" id="urgency-medium">Medium</div>
+                <div class="urgency-option high" data-level="high" id="urgency-high">🔴 High</div>
+              </div>
+              <!-- Urgency Guide -->
+              <div class="urgency-guide" id="urgency-guide">
+                <button type="button" class="urgency-guide-toggle" id="urgency-guide-toggle">
+                  <span>ℹ️</span>
+                  <span data-i18n="urgency_what">What do these levels mean?</span>
+                  <span class="urgency-guide-chevron">▼</span>
+                </button>
+                <div class="urgency-guide-body" id="urgency-guide-body">
+                  <div class="urgency-guide-item low-guide">
+                    <div class="urgency-guide-badge low">🟢 Low</div>
+                    <p data-i18n="urgency_low_desc">Animal is not in immediate danger. Appears healthy but is roaming, lost, or in need of shelter. No visible injuries.</p>
+                    <span class="urgency-guide-example" data-i18n="urgency_low_ex">e.g. A stray dog sleeping near a park, a cat wandering in a colony</span>
+                  </div>
+                  <div class="urgency-guide-item medium-guide">
+                    <div class="urgency-guide-badge medium">🟡 Medium</div>
+                    <p data-i18n="urgency_medium_desc">Animal shows signs of distress, minor injury, illness, or is stuck in a difficult location. Needs attention soon but is not life-threatening.</p>
+                    <span class="urgency-guide-example" data-i18n="urgency_medium_ex">e.g. Limping dog, cat stuck on a ledge, animal with skin infection</span>
+                  </div>
+                  <div class="urgency-guide-item high-guide">
+                    <div class="urgency-guide-badge high">🔴 High</div>
+                    <p data-i18n="urgency_high_desc">Animal is in immediate danger or critical condition. Severe injury, bleeding, hit by vehicle, trapped, drowning, or being abused. Requires emergency intervention.</p>
+                    <span class="urgency-guide-example" data-i18n="urgency_high_ex">e.g. Dog hit by car, animal caught in wire/trap, drowning puppy, visible fractures</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Location -->
+            <div class="form-group">
+              <label data-i18n="location">Location</label>
+              <div class="location-row">
+                <div class="form-group">
+                  <input type="text" id="location-input" placeholder="Enter location or use GPS" autocomplete="off">
+                </div>
+                <button type="button" id="btn-locate" class="btn-locate" aria-label="Use GPS">📍</button>
+              </div>
+            </div>
+
+            <!-- Description -->
             <div class="form-group">
               <label data-i18n="description">Description</label>
-              <textarea id="description-input" placeholder="Describe the animal's condition, location, type of animal, any injuries..."></textarea>
+              <textarea id="description-input" placeholder="Describe the animal's condition, behavior, any injuries..."></textarea>
+            </div>
+
+            <!-- Contact -->
+            <div class="form-group">
+              <label data-i18n="contact_number">Your Contact Number</label>
+              <input type="tel" id="contact-input" placeholder="+91 XXXXX XXXXX" autocomplete="tel">
             </div>
           </form>
         </div>
@@ -416,8 +444,8 @@
         <!-- Filters -->
         <div class="filter-chips">
           <button class="chip active" id="chip-all">All</button>
-          <button class="chip" id="chip-active" title="Team has been assigned and is responding to the report">Responding</button>
-          <button class="chip" id="chip-transit" title="Rescue team is on the way to the animal's location">On the Way</button>
+          <button class="chip" id="chip-active">Active</button>
+          <button class="chip" id="chip-transit">In Transit</button>
           <button class="chip" id="chip-rescued">Rescued</button>
         </div>
 
@@ -441,7 +469,7 @@
               <div class="progress-step"></div>
             </div>
             <div class="track-status-row">
-              <span class="track-status-text rescue">🚑 Responding — Team assigned</span>
+              <span class="track-status-text rescue">🚑 Team dispatched</span>
               <span class="track-time">ETA 8 min</span>
             </div>
           </div>
@@ -463,7 +491,7 @@
               <div class="progress-step"></div>
             </div>
             <div class="track-status-row">
-              <span class="track-status-text transit">🚗 On the Way — Heading to location</span>
+              <span class="track-status-text transit">🔄 In transit</span>
               <span class="track-time">ETA 15 min</span>
             </div>
           </div>
@@ -770,17 +798,6 @@
       <!-- ======================== -->
       <div id="toast" class="toast"></div>
 
-      <!-- ======================== -->
-      <!-- STORY DETAIL MODAL       -->
-      <!-- ======================== -->
-      <div class="story-detail-modal" id="story-detail-modal">
-        <div class="story-detail-content" id="story-detail-content">
-          <button class="story-detail-close" id="story-detail-close">✕</button>
-          <div class="story-detail-img-wrap" id="story-detail-img-wrap"></div>
-          <div class="story-detail-body" id="story-detail-body"></div>
-        </div>
-      </div>
-
     </div><!-- /screen-container -->
 
     <!-- ======================== -->
@@ -789,7 +806,9 @@
     <div id="submit-footer" class="submit-footer" style="display: none;">
       <div class="submit-footer-inner">
         <div id="submit-checklist" class="submit-checklist">
-          <span class="check-item" id="check-photo">📷 Add a Photo to submit</span>
+          <span class="check-item" id="check-photo">📷 Photo</span>
+          <span class="check-item" id="check-type">🐾 Type</span>
+          <span class="check-item" id="check-location">📍 Location</span>
         </div>
         <button type="button" id="btn-submit" class="btn-submit" disabled>
           🚀 Submit Report

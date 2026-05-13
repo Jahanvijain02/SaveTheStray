@@ -529,8 +529,21 @@ document.addEventListener('DOMContentLoaded', () => {
       const dict = translations[currentLang];
       reportScreenTitle.textContent = dict?.report_emergency || 'Report Emergency';
     }
-    // Pre-select high urgency (removed — field no longer exists)
-    // Auto-detect location (removed — field no longer exists)
+    // Pre-select high urgency
+    selectUrgency('high');
+    // Auto-detect location
+    const locInput = document.getElementById('location-input');
+    if (locInput) {
+      locInput.value = 'Fetching location...';
+      locInput.style.color = 'var(--grey-400)';
+      setTimeout(() => {
+        locInput.value = 'MG Road, Bangalore';
+        locInput.style.color = 'var(--slate)';
+        locationFilled = true;
+        validateReportForm();
+        showToast('📍 Location auto-detected');
+      }, 1200);
+    }
   }
 
   function exitEmergencyMode() {
@@ -564,22 +577,31 @@ document.addEventListener('DOMContentLoaded', () => {
   // Report Screen
   // ==========================
 
+  // --- Validation state ---
   let photoUploaded = false;
+  let locationFilled = false;
 
   const submitFooter = document.getElementById('submit-footer');
   const btnSubmit = document.getElementById('btn-submit');
   const checkPhoto = document.getElementById('check-photo');
+  const checkType = document.getElementById('check-type');
+  const checkLocation = document.getElementById('check-location');
   const photoUpload = document.getElementById('photo-upload');
   const photoFileInput = document.getElementById('photo-file-input');
+  const locationInput = document.getElementById('location-input');
 
   // --- Validate & update submit button state ---
   function validateReportForm() {
     const isPhotoReady = photoUploaded;
+    const isTypeReady = selectedAnimalType !== null;
+    const isLocationReady = locationFilled;
 
-    // Update checklist pills (only photo is required now)
+    // Update checklist pills
     if (checkPhoto) checkPhoto.classList.toggle('done', isPhotoReady);
+    if (checkType) checkType.classList.toggle('done', isTypeReady);
+    if (checkLocation) checkLocation.classList.toggle('done', isLocationReady);
 
-    const allReady = isPhotoReady;
+    const allReady = isPhotoReady && isTypeReady && isLocationReady;
 
     // Enable/disable button (footer is always visible)
     if (btnSubmit) {
@@ -707,6 +729,8 @@ document.addEventListener('DOMContentLoaded', () => {
     locationFilled = false;
     if (btnSubmit) btnSubmit.disabled = true;
     if (checkPhoto) checkPhoto.classList.remove('done');
+    if (checkType) checkType.classList.remove('done');
+    if (checkLocation) checkLocation.classList.remove('done');
   }
 
   // ==========================
@@ -738,7 +762,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Tracking Screen — filter chips (functional)
   // ==========================
   const trackingLabel = document.getElementById('tracking-section-label');
-  const chipLabels = { all: '', active: 'Responding', transit: 'On the Way', rescued: 'Rescued' };
+  const chipLabels = { all: '', active: 'Active Rescues', transit: 'In Transit', rescued: 'Rescued' };
 
   document.querySelectorAll('.chip').forEach(chip => {
     chip.addEventListener('click', () => {
@@ -841,151 +865,4 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================
   applyLanguage(currentLang);
   navigateTo('splash', false);
-
-  // ==========================
-  // Success Stories Carousel
-  // ==========================
-  const carouselTrack = document.getElementById('success-carousel-track');
-  const carouselDots = document.querySelectorAll('.carousel-dot');
-  let currentSlide = 0;
-  const totalSlides = 3;
-  let autoPlayTimer = null;
-
-  function goToSlide(index) {
-    currentSlide = index;
-    if (carouselTrack) {
-      carouselTrack.style.transform = `translateX(-${index * 100}%)`;
-    }
-    carouselDots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === index);
-    });
-  }
-
-  function nextSlide() {
-    goToSlide((currentSlide + 1) % totalSlides);
-  }
-
-  // Auto-play every 4 seconds
-  function startAutoPlay() {
-    stopAutoPlay();
-    autoPlayTimer = setInterval(nextSlide, 4000);
-  }
-
-  function stopAutoPlay() {
-    if (autoPlayTimer) clearInterval(autoPlayTimer);
-  }
-
-  // Dot click navigation
-  carouselDots.forEach(dot => {
-    dot.addEventListener('click', () => {
-      goToSlide(parseInt(dot.dataset.index));
-      startAutoPlay();
-    });
-  });
-
-  // Swipe support
-  let touchStartX = 0;
-  let touchEndX = 0;
-  const carousel = document.getElementById('success-carousel');
-  if (carousel) {
-    carousel.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-      stopAutoPlay();
-    }, { passive: true });
-
-    carousel.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      const diff = touchStartX - touchEndX;
-      if (Math.abs(diff) > 50) {
-        if (diff > 0 && currentSlide < totalSlides - 1) {
-          goToSlide(currentSlide + 1);
-        } else if (diff < 0 && currentSlide > 0) {
-          goToSlide(currentSlide - 1);
-        }
-      }
-      startAutoPlay();
-    }, { passive: true });
-  }
-
-  startAutoPlay();
-
-  // ==========================
-  // Success Story Detail Modal
-  // ==========================
-  const storyData = {
-    1: {
-      img: 'assets/rescued-dog.png',
-      badge: '🏠 Rescued & Adopted',
-      title: "Max's Journey Home",
-      fullStory: `<p><strong>Location Found:</strong> NH-44 Highway, near Toll Plaza</p>
-        <p><strong>Condition:</strong> Broken left hind leg, severe dehydration, multiple scratches</p>
-        <p><strong>Rescued By:</strong> Team Alpha — CUPA Bangalore</p>
-        <hr>
-        <p>Max was spotted by a truck driver lying motionless on the side of NH-44. Our rescue team reached within 22 minutes of the report.</p>
-        <p>After emergency surgery and 3 weeks of intensive care at CUPA Animal Hospital, Max made a full recovery. He was adopted by the Sharma family in Koramangala who had been looking to give a rescue dog a forever home.</p>
-        <p><strong>Today, Max is healthy, happy, and loved.</strong> 🐾❤️</p>`,
-      color: '#2ED573'
-    },
-    2: {
-      img: 'assets/stray-cat.png',
-      badge: '💙 Rehabilitated',
-      title: "Luna's Second Chance",
-      fullStory: `<p><strong>Location Found:</strong> Storm drain near HSR Layout BDA Complex</p>
-        <p><strong>Condition:</strong> Hypothermic, malnourished, upper respiratory infection</p>
-        <p><strong>Rescued By:</strong> Volunteer Priya S. + Charlie's Animal Rescue</p>
-        <hr>
-        <p>During heavy monsoon rains, a passerby heard faint meowing from a storm drain. They reported it immediately on SaveTheStray.</p>
-        <p>Our volunteer Priya and the Charlie's Rescue team carefully extracted the tiny 3-week-old kitten from the drain. Luna was nursed back to health over 6 weeks with bottle feeding, warmth pads, and antibiotics.</p>
-        <p><strong>Luna was adopted by a wonderful family and now lives like a queen!</strong> 🐱👑</p>`,
-      color: '#70A1FF'
-    },
-    3: {
-      img: 'assets/injured-bird.png',
-      badge: '🕊️ Released to Wild',
-      title: "Coco Flies Again",
-      fullStory: `<p><strong>Location Found:</strong> Balcony of apartment in Indiranagar</p>
-        <p><strong>Condition:</strong> Broken right wing, unable to fly, mild infection</p>
-        <p><strong>Rescued By:</strong> People For Animals — JP Nagar wing</p>
-        <hr>
-        <p>A young student found Coco on their balcony, unable to fly. The pigeon had a fractured wing, likely from a collision with a glass window.</p>
-        <p>After careful splinting and 4 weeks of rehabilitation at the PFA center, Coco's wing healed completely. On a sunny Tuesday morning, Coco was released in Cubbon Park.</p>
-        <p><strong>Coco circled the sky twice and flew away free.</strong> 🕊️✨</p>`,
-      color: '#FFA502'
-    }
-  };
-
-  const storyModal = document.getElementById('story-detail-modal');
-  const storyDetailClose = document.getElementById('story-detail-close');
-  const storyDetailImgWrap = document.getElementById('story-detail-img-wrap');
-  const storyDetailBody = document.getElementById('story-detail-body');
-
-  document.querySelectorAll('.story-read-more').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const id = btn.dataset.story;
-      const data = storyData[id];
-      if (!data || !storyModal) return;
-
-      storyDetailImgWrap.innerHTML = `<img src="${data.img}" alt="${data.title}"><span class="story-detail-badge" style="background:${data.color}">${data.badge}</span>`;
-      storyDetailBody.innerHTML = `<h3>${data.title}</h3>${data.fullStory}`;
-      storyModal.classList.add('show');
-      stopAutoPlay();
-    });
-  });
-
-  if (storyDetailClose && storyModal) {
-    storyDetailClose.addEventListener('click', () => {
-      storyModal.classList.remove('show');
-      startAutoPlay();
-    });
-  }
-
-  if (storyModal) {
-    storyModal.addEventListener('click', (e) => {
-      if (e.target === storyModal) {
-        storyModal.classList.remove('show');
-        startAutoPlay();
-      }
-    });
-  }
 });
